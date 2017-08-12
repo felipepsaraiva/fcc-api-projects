@@ -1,0 +1,27 @@
+{
+  "name": "fcc-api-projects",
+  "version": "1.0.0",
+  "description": "API Projects proposed by Free Code Camp",
+  "homepage": "https://fcc-api-project.glitch.me/",
+  "repository": {
+    "url": "https://github.com/felipepsaraiva/fcc-api-projects"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "6.x"
+  },
+  "author": "felipepsaraiva",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "markdown-it": "^8.3.2",
+    "mongoose": "^4.11.6",
+    "multer": "^1.3.0",
+    "valid-url": "^1.0.9"
+  }
+}
