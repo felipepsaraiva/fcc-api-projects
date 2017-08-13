@@ -6,6 +6,7 @@ var md = require('markdown-it')();
 
 var timestamp = require('./timestamp');
 var requestHeaderParser = require('./request-header-parser');
+var urlShortener = require('./url-shortener');
 var fileMetadata = require('./file-metadata');
 
 //Configs
@@ -15,6 +16,7 @@ app.enable('trust proxy');
 
 app.use('/timestamp', timestamp);
 app.use('/request-header-parser', requestHeaderParser);
+app.use('/url-shortener', urlShortener);
 app.use('/file-metadata', fileMetadata);
 
 app.get('/', function(req, res, next) {

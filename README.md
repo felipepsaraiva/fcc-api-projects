@@ -10,6 +10,10 @@ Live: <https://fcc-api-project.glitch.me/timestamp>
 Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/request-header-parser/README.md)  
 Live: <https://fcc-api-project.glitch.me/request-header-parser>
 
+* **Url Shortener Microservice:**  
+Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/url-shortener/README.md)  
+Live: <https://fcc-api-project.glitch.me/url-shortener>
+
 * **File Metadata Microservice:**  
 Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/file-metadata/README.md)  
 Live: <https://fcc-api-project.glitch.me/file-metadata>
