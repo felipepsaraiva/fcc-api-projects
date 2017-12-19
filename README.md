@@ -14,6 +14,10 @@ Live: <https://fcc-api-project.glitch.me/request-header-parser>
 Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/url-shortener/README.md)  
 Live: <https://fcc-api-project.glitch.me/url-shortener>
 
+* **Image Search Abstraction Layer:**  
+Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/image-search/README.md)  
+Live: <https://fcc-api-project.glitch.me/image-search>
+
 * **File Metadata Microservice:**  
 Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/file-metadata/README.md)  
 Live: <https://fcc-api-project.glitch.me/file-metadata>
