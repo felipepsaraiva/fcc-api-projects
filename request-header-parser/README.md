@@ -1,7 +1,21 @@
 # Request Header Parser Microservice
 
-FreeCodeCamp provides a number of challenges for people to learn web development. This is the solutions I developed for the Request Header Parser Microservice challenge to learn Back End Development with NodeJS. Here I have all projects implemented in the same server, so it's easier to maintain.
-
-For every request, the API will return a JSON string containing the request _IP address_, _language_ and _operating system information_.
-
 Live: <https://fcc-api-project.glitch.me/request-header-parser>
+
+### User stories:
+
+1. I can get the IP address, preferred languages (from header `Accept-Language`) and system infos (from header `User-Agent`) for my device.
+
+#### Example usage:
+
+* <https://fcc-api-project.glitch.me/api/whoami>
+
+#### Example output:
+
+```
+{
+  "ipaddress":"159.20.14.100",
+  "language":"en-US,en;q=0.5",
+  "software":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0"
+}
+```

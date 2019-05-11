@@ -1,16 +1,30 @@
-var express = require('express');
-var router = express.Router();
+const fs = require('fs');
+const md = require('markdown-it')();
 
-//router.enable('trust proxy');
+const express = require('express');
+const homeRouter = express.Router();
+const apiRouter = express.Router();
 
-router.get('/', function(req, res) {
-  var response = {
-    ipaddress: req.ip,
-    language: req.headers['accept-language'].split(',')[0],
-    software: req.headers['user-agent'].split(/[()]/)[1]
-  };
+homeRouter.get('/', (req, res, next) => {
+  fs.readFile(__dirname + '/README.md', 'utf8', (err, data) => {
+    if (err) {
+      console.log("Couldn't load request-header-parser/README.md", err);
+      return next(new Error('Error loading this page'));
+    }
 
-  res.json(response);
+    res.render('index', { body: md.render(data) });
+  });
 });
 
-module.exports = router;
+apiRouter.get('/whoami', (req, res) => {
+  res.json({
+    ipaddress: req.ip,
+    language: req.headers['accept-language'],
+    software: req.headers['user-agent']
+  });
+});
+
+module.exports = {
+  home: homeRouter,
+  api: apiRouter
+};

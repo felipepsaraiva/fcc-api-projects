@@ -1,42 +1,43 @@
-var express = require('express');
-var router = express.Router();
+const fs = require('fs');
+const md = require('markdown-it')();
 
-var fs = require('fs');
-var md = require('markdown-it')();
+const express = require('express');
+const homeRouter = express.Router();
+const apiRouter = express.Router();
 
-var month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-router.get('/', function(req, res) {
-  fs.readFile(__dirname + '/README.md', 'utf8', function(err, data) {
+homeRouter.get('/', (req, res, next) => {
+  fs.readFile(__dirname + '/README.md', 'utf8', (err, data) => {
     if (err) {
-      res.type('plain');
-      res.status(500).send('Error loading this page!');
-      return console.log("Couldn't load timestamp/README.md", err);
+      console.log("Couldn't load timestamp/README.md", err);
+      return next(new Error('Error loading this page'));
     }
 
-    res.render('index', {body: md.render(data)});
+    res.render('index', { body: md.render(data) });
   });
 });
 
-router.get('/:date', function(req, res) {
-  var date = req.params.date, timestamp;
+apiRouter.get('/timestamp/:date?', (req, res) => {
+  let timestamp, date = req.params.date;
 
-  if ( Number.isNaN(Number(date)) )
-    timestamp = Date.parse(date);
-  else
+  if (!date) {
+     timestamp = Date.now();
+  } else {
     timestamp = Number(date);
+    if (Number.isNaN(timestamp))
+      timestamp = Date.parse(date);
+  }
 
   if (Number.isNaN(timestamp))
-    return res.send('Invalid Date...');
+    return res.json({ error: "Invalid Date" });
 
   date = new Date(timestamp);
-  var obj = {
+  res.json({
     unix: timestamp,
-    natural: month[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
-  };
-
-  obj.natural = month[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
-  res.json(obj);
+    utc: date.toUTCString()
+  });
 });
 
-module.exports = router;
+module.exports = {
+  home: homeRouter,
+  api: apiRouter
+};

@@ -1,22 +1,27 @@
 # Timestamp Microservice
 
-FreeCodeCamp provides a number of challenges for people to learn web development. This is the solutions I developed for the Timestamp Microservice challenge to learn Back End Development with NodeJS. Here I have all projects implemented in the same server, so it's easier to maintain.
-
 Live: <https://fcc-api-project.glitch.me/timestamp>
 
+### User stories:
 
-### API
+1. The API endpoint is `GET [project_url]/api/timestamp/:date_string?`.
+2. A date string is valid if can be successfully parsed by `new Date(date_string)` (JS) . Note that the unix timestamp needs to be an **integer** (not a string) specifying **milliseconds**. In our test we will use date strings compliant with ISO-8601 (e.g. `"2016-11-20"`) because this will ensure an UTC timestamp.
+3. If the date string is **empty** it should be equivalent to trigger `new Date()`, i.e. the service uses the current timestamp.
+4. If the date string is **valid** the api returns a JSON having the structure
+`{"unix": <date.getTime()>, "utc": <date.toUTCString()> }`
+e.g. `{"unix": 1479663089000 , "utc": "Sun, 20 Nov 2016 17:31:29 GMT"}`.
+5. If the date string is **invalid** the api returns a JSON having the structure `{"error" : "Invalid Date" }`.
 
-**Parameter:** A date written on natural language (January 16, 2017) or a unix timestamp.
+#### Example usage:
 
-**Response:** A JSON string containing both the unix timestamp and the natural language form of the date provided.
+* <https://fcc-api-project.glitch.me/api/timestamp/2015-12-25>
+* <https://fcc-api-project.glitch.me/api/timestamp/1451001600000>
 
+#### Example output:
 
-### Example
-
-**Request:**  
-<https://fcc-api-project.glitch.me/timestamp/January%2016,%202017>  
-<https://fcc-api-project.glitch.me/timestamp/1484532000000>
-
-**Response:**  
-`{"natural":"January 16, 2017","unix":1484532000000}`
+```
+{
+  "unix": 1451001600000,
+  "utc": "Fri, 25 Dec 2015 00:00:00 GMT"
+}
+```

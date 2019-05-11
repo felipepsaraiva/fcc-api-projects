@@ -1,10 +1,14 @@
+
 # File Metadata Microservice
 
-FreeCodeCamp provides a number of challenges for people to learn web development. This is the solutions I developed for the File Metadata Microservice challenge to learn Back End Development with NodeJS. Here I have all projects implemented in the same server, so it's easier to maintain.
+Live: <https://fcc-api-project.glitch.me/file-metadata>
 
-The microservice will return a JSON string containing the size (bytes) of the file uploaded on the request.
+### User stories:
 
-**Response Example:**  
-`{ "size":175 }`
+1. I can submit a form that includes a file upload.
+2. The from file input field  has the "name" attribute set to "upfile" (freeCodeCamp relies on this in testing).
+3. When I submit something, I will receive the file name and size in bytes within the JSON response
 
-Live version: <https://fcc-api-project.glitch.me/file-metadata>
+### Usage :
+
+* Go to the main page, and upload a file using the provided form.
