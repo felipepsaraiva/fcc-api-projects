@@ -16,7 +16,7 @@ homeRouter.get('/', (req, res, next) => {
   });
 });
 
-apiRouter.get('/timestamp/:date?', (req, res) => {
+apiRouter.get('/:date?', (req, res) => {
   let timestamp, date = req.params.date;
 
   if (!date) {

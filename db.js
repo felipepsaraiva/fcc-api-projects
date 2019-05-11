@@ -1,6 +1,7 @@
-var mongoose = require('mongoose');
+const sqlite = require('sqlite');
 
-var dbUrl = process.env.DB_URL;
-mongoose.connect(dbUrl, { useNewUrlParser: true });
+let config = null;
+if (process.env.NODE_ENV == 'development')
+  config = { force: 'last' };
 
-module.exports = mongoose;
+module.exports = sqlite.open('./apis.sqlite').then((db) => db.migrate(config));

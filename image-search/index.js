@@ -4,7 +4,7 @@ var router = express.Router();
 var fs = require('fs');
 var md = require('markdown-it')();
 var http = require('https');
-var db = require('../db');
+var db = require('../mongodb');
 
 var searchSchema = db.Schema({
   term: String,

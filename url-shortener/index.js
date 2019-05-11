@@ -1,73 +1,81 @@
-var express = require('express');
-var router = express.Router();
+const fs = require('fs');
+const md = require('markdown-it')();
+const validUrl = require('valid-url');
+const shortid = require('shortid');
 
-var fs = require('fs');
-var md = require('markdown-it')();
-var validUrl = require('valid-url');
-var db = require('../db');
+const express = require('express');
+const homeRouter = express.Router();
+const apiRouter = express.Router();
 
-var urlSchema = db.Schema({
-  original_url: String
-});
-var Url = db.model('url', urlSchema);
+const dbPromise = require('../db');
 
-router.get('/', function(req, res) {
-  fs.readFile(__dirname + '/README.md', 'utf8', function(err, data) {
+homeRouter.get('/', (req, res, next) => {
+  fs.readFile(__dirname + '/README.md', 'utf8', (err, data) => {
     if (err) {
       console.log("Couldn't load url-shortener/README.md", err);
-      var error = new Error('Error loading this page!');
-      return next(err);
+      return next(new Error('Error loading this page'));
     }
 
-    res.render('index', {body: md.render(data)});
+    res.render('url-shortener', { body: md.render(data) });
   });
 });
 
-router.get('/new/*', function(req, res, next) {
-  var url = req.params[0];
+const newShortUrl = async (req, res, next) => {
+  const url = req.body.url;
 
   if (!validUrl.isWebUri(url))
-    return res.json({
-      error: 'Invalid URL'
+    return res.status(400).json({ error: 'Invalid URL' });
+
+  try {
+    const db = await dbPromise;
+
+    let result = await db.get('SELECT id, original FROM url WHERE original = ?', url);
+    if (result)
+      return res.json({
+        short_url: req.headers.host + '/api/shorturl/' + result.id,
+        original_url: result.original
+      });
+
+    const id = shortid.generate();
+    await db.run('INSERT INTO url VALUES (?, ?)', id, url);
+
+    result = await db.get('SELECT id, original FROM url WHERE id = ?', id);
+    res.json({
+      short_url: req.headers.host + '/api/shorturl/' + result.id,
+      original_url: result.original
     });
+  } catch (e) {
+    next(new Error('Server error'));
+    console.log('Error creating new short URL:', e);
+  }
+};
 
-  Url.find({ original_url: url }, function(err, results) {
-    if (!err && results.length > 0) {
-      res.json({
-        short_url: 'http://' + req.headers.host + '/url-shortener/' + results[0]._id,
-        original_url: results[0].original_url
-      });
-    } else {
-      var entry = new Url({
-        original_url: url
-      });
+apiRouter.post('/new', newShortUrl);
+apiRouter.get('/new/*', (req, res, next) => {
+  req.body = { url: req.params[0] };
+  next();
+}, newShortUrl);
 
-      entry.save(function(err, entry) {
-        if (err)
-          return next(err);
+apiRouter.get('/:id', async (req, res, next) => {
+  const id = req.params.id;
+  if (!shortid.isValid(id))
+    return res.status(400).json({ error: 'Invalid short URL' });
 
-        res.json({
-          short_url: 'http://' + req.headers.host + '/url-shortener/' + entry._id,
-          original_url: entry.original_url
-        });
-      });
-    }
-  });
+  try {
+    const db = await dbPromise;
+
+    const result = await db.get('SELECT original FROM url WHERE id = ?', id);
+    if (!result)
+      return res.status(404).json({ error: 'Short URL does not exist' });
+
+    res.redirect(result.original);
+  } catch (e) {
+    next(new Error('Server error'));
+    console.log('Error fetching original URL:', e);
+  }
 });
 
-router.get('/:id', function(req, res, next) {
-  Url.findById(req.params.id, function(err, entry) {
-    if (err)
-      return next(err);
-
-    if (entry) {
-      res.redirect(entry.original_url);
-    } else {
-      var err = new Error("This URL doesn't exists!");
-      err.status = 404;
-      next(err);
-    }
-  });
-});
-
-module.exports = router;
+module.exports = {
+  home: homeRouter,
+  api: apiRouter
+};

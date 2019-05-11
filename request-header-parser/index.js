@@ -16,7 +16,7 @@ homeRouter.get('/', (req, res, next) => {
   });
 });
 
-apiRouter.get('/whoami', (req, res) => {
+apiRouter.get('/', (req, res) => {
   res.json({
     ipaddress: req.ip,
     language: req.headers['accept-language'],

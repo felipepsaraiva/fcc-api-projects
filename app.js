@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const fs = require('fs');
 const md = require('markdown-it')();
+const bodyParser = require('body-parser');
 
 const express = require('express');
 const app = express();
@@ -11,22 +12,25 @@ app.set('port', (process.env.PORT || 3000));
 app.set('view engine', 'ejs');
 app.enable('trust proxy');
 
+// Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Routes
 const timestamp = require('./timestamp');
 const headerParser = require('./request-header-parser');
+const urlShortener = require('./url-shortener');
 
 app.use('/timestamp', timestamp.home);
 app.use('/request-header-parser', headerParser.home);
+app.use('/url-shortener', urlShortener.home);
 app.use('/image-search', require('./image-search'));
 app.use('/file-metadata', require('./file-metadata'));
 
-app.use('/api', timestamp.api);
-app.use('/api', headerParser.api);
+app.use('/api/timestamp', timestamp.api);
+app.use('/api/whoami', headerParser.api);
+app.use('/api/shorturl', urlShortener.api);
 
-// app.use('/request-header-parser', require('./request-header-parser'));
-// app.use('/url-shortener', require('./url-shortener'));
-// app.use('/image-search', require('./image-search'));
-// app.use('/file-metadata', require('./file-metadata'));
-
+// Main route
 app.get('/', (req, res, next) => {
   fs.readFile(__dirname + '/README.md', 'utf8', (err, data) => {
     if (err) {
@@ -52,6 +56,15 @@ app.use((err, req, res, next) => {
   res.type('text/plain').status(status).send(status + ': ' + err.message);
 });
 
-app.listen(app.get('port'), () => {
-  console.log(`Server is running on port ${app.get('port')}...`);
+const dbPromise = require('./db');
+dbPromise.then((db) => {
+  app.listen(app.get('port'), () => {
+    console.log(`Node Environment: ${process.env.NODE_ENV}`);
+    console.log('Debug:', process.env.DEBUG);
+    console.log(`Port: ${app.get('port')}`);
+    console.log('Server is running...\n');
+  });
+}).catch((err) => {
+  console.log('Could not open database', err);
+  process.exit();
 });
