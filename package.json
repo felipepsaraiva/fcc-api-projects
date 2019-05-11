@@ -1,6 +1,6 @@
 {
   "name": "fcc-api-projects",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "API Projects proposed by Free Code Camp",
   "homepage": "https://fcc-api-project.glitch.me/",
   "repository": {
@@ -12,7 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
-    "node": "6.x"
+    "node": "10.x"
   },
   "author": "felipepsaraiva",
   "license": "MIT",
