@@ -4,24 +4,17 @@ freeCodeCamp provides a number of challenges for people to learn web development
 
 ### Required Projects:
 
-* **Timestamp Microservice:**  
-Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/timestamp/README.md)  
-Live: <https://fcc-api-project.glitch.me/timestamp>
+* **Timestamp Microservice:** [Live](/timestamp) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/timestamp)
 
-* **Request Header Parser Microservice:**  
-Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/request-header-parser/README.md)  
-Live: <https://fcc-api-project.glitch.me/request-header-parser>
+* **Request Header Parser Microservice:** [Live](/request-header-parser) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/request-header-parser)
 
-* **Url Shortener Microservice:**  
-Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/url-shortener/README.md)  
-Live: <https://fcc-api-project.glitch.me/url-shortener>
+* **Url Shortener Microservice:** [Live](/url-shortener) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/url-shortener)
 
-* **File Metadata Microservice:**  
-Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/file-metadata/README.md)  
-Live: <https://fcc-api-project.glitch.me/file-metadata>
+* **Exercise Tracker Microservice:** [Live](/exercise-tracker) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/exercise-tracker)
+
+* **File Metadata Microservice:** [Live](/file-metadata) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/file-metadata)
+
 
 ### Optional Projects
 
-* **Image Search Abstraction Layer:**  
-Documentation: [Here](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/image-search/README.md)  
-Live: <https://fcc-api-project.glitch.me/image-search>
+* **Image Search Abstraction Layer:** [Live](/image-search) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/image-search)

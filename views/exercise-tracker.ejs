@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <%- include('head') %>
+
+  <body>
+    <div class="content markdown-body">
+      <%- body %>
+    </div>
+
+    <div class="content">
+      <div class="columns">
+        <div class="column is-one-third">
+          <h2 class="title is-5 has-text-centered">Create new user</h2>
+
+          <form action="/api/exercise/new-user" method="post">
+            <div class="field">
+              <label class="label" for="new-username">Username*</label>
+              <div class="control">
+                <input class="input" type="text" id="new-username" name="username" />
+              </div>
+            </div>
+
+            <button class="button is-dark is-fullwidth">Submit</button>
+          </form>
+        </div>
+
+        <div class="column is-one-third">
+          <h2 class="title is-5 has-text-centered">Add exercise</h2>
+
+          <form action="/api/exercise/add" method="post">
+            <div class="field">
+              <label class="label" for="add-userId">User id*</label>
+              <div class="control">
+                <input class="input" type="text" id="add-userId" name="userId" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="add-description">Description*</label>
+              <div class="control">
+                <input class="input" type="text" id="add-description" name="description" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="add-duration">Duration (min)*</label>
+              <div class="control">
+                <input class="input" type="text" id="add-duration" name="duration" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="add-date">Date</label>
+              <div class="control">
+                <input class="input" type="date" id="add-date" name="date" />
+              </div>
+            </div>
+
+            <button class="button is-dark is-fullwidth">Submit</button>
+          </form>
+        </div>
+
+        <div class="column is-one-third">
+          <h2 class="title is-5 has-text-centered">Exercise log</h2>
+
+          <form action="/api/exercise/log" method="get">
+            <div class="field">
+              <label class="label" for="log-userId">User id*</label>
+              <div class="control">
+                <input class="input" type="text" id="log-userId" name="userId" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="log-from">From</label>
+              <div class="control">
+                <input class="input" type="date" id="log-from" name="from" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="log-to">To</label>
+              <div class="control">
+                <input class="input" type="date" id="log-to" name="to" />
+              </div>
+            </div>
+
+            <button class="button is-dark is-fullwidth">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

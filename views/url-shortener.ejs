@@ -3,11 +3,11 @@
   <%- include('head') %>
 
   <body>
-    <div class="markdown-body">
+    <div class="content markdown-body">
       <%- body %>
     </div>
 
-    <div class="markdown-body" style="text-align: center;">
+    <div class="content" style="text-align: center;">
       <form id="url-shortener-form" action="/api/shorturl/new" method="post">
         <label for="url">URL to be shortened: </label>
         <input type="text" name="url" id="url">
