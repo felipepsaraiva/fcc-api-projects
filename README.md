@@ -4,17 +4,17 @@ freeCodeCamp provides a number of challenges for people to learn web development
 
 ### Required Projects:
 
-* **Timestamp Microservice:** [Live](/timestamp) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/timestamp)
+* **Timestamp Microservice:** [Live](https://fcc-api-project.glitch.me/timestamp) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/timestamp)
 
-* **Request Header Parser Microservice:** [Live](/request-header-parser) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/request-header-parser)
+* **Request Header Parser Microservice:** [Live](https://fcc-api-project.glitch.me/request-header-parser) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/request-header-parser)
 
-* **Url Shortener Microservice:** [Live](/url-shortener) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/url-shortener)
+* **Url Shortener Microservice:** [Live](https://fcc-api-project.glitch.me/url-shortener) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/url-shortener)
 
-* **Exercise Tracker Microservice:** [Live](/exercise-tracker) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/exercise-tracker)
+* **Exercise Tracker Microservice:** [Live](https://fcc-api-project.glitch.me/exercise-tracker) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/exercise-tracker)
 
-* **File Metadata Microservice:** [Live](/file-metadata) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/file-metadata)
+* **File Metadata Microservice:** [Live](https://fcc-api-project.glitch.me/file-metadata) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/file-metadata)
 
 
 ### Optional Projects
 
-* **Image Search Abstraction Layer:** [Live](/image-search) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/image-search)
+* **Image Search Abstraction Layer:** [Live](https://fcc-api-project.glitch.me/image-search) / [Code](https://github.com/felipepsaraiva/fcc-api-projects/blob/master/image-search)
