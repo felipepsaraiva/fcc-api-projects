@@ -1,19 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var fs = require('fs');
-var md = require('markdown-it')();
-var http = require('https');
-var db = require('../mongodb');
+const fs = require('fs');
+const md = require('markdown-it')();
+const axios = require('axios');
+const dbPromise = require('../db');
 
-var searchSchema = db.Schema({
-  term: String,
-  when: Number
-});
-var Search = db.model('image-search', searchSchema);
-
-router.get('/', function(req, res) {
-  fs.readFile(__dirname + '/README.md', 'utf8', function(err, data) {
+router.get('/', (req, res, next) => {
+  fs.readFile(__dirname + '/README.md', 'utf8', (err, data) => {
     if (err) {
       console.log("Couldn't load image-search/README.md", err);
       return next(new Error('Error loading this page!'));
@@ -23,52 +17,58 @@ router.get('/', function(req, res) {
   });
 });
 
-router.get('/search/:search', function(req, res) {
-  var search = req.params.search, offset = req.query.offset;
-  var options = {
-    "method": "GET",
-    "hostname": "api.imgur.com",
-    "path": "/3/gallery/search" + (offset ? `/${offset}` : '') + "?q=" + search,
-    "headers": {
-      "authorization": "Client-ID " + process.env.CLIENTID
+router.get('/search/:search', async (req, res, next) => {
+  const search = req.params.search
+  const offset = req.query.offset;
+  let url = 'https://api.imgur.com/3/gallery/search';
+  if (offset) url += `/${offset}`
+
+  try {
+    const response = await axios.get(url, {
+      params: { q: search },
+      responseType: 'json',
+      headers: { "authorization": "Client-ID " + process.env.CLIENTID },
+    });
+
+    if (!response.data.success)
+      throw 'Imgur API error';
+
+    const data = response.data.data;
+    const result = [];
+    for (let i = 0; i < 20 && i < data.length; i++) {
+      result.push({
+        url: (data[i].is_album ? data[i].images[0].link : data[i].link),
+        description: data[i].title,
+        page: (data[i].is_album ? data[i].link : null),
+      });
     }
-  };
 
-  var request = http.request(options, function (response) {
-    var chunks = [];
-    response.on("data", function (chunk) {
-      chunks.push(chunk);
-    });
+    res.json(result);
 
-    response.on("end", function () {
-      var body = JSON.parse(Buffer.concat(chunks)), results = [], result;
-      for (var i=0 ; i<20 && i< body.data.length ; i++) {
-        result = body.data[i];
-        results.push({
-          url: (result.is_album ? result.images[0].link : result.link),
-          description: result.title,
-          page: (result.is_album ? result.link : null)
-        });
-      }
-      res.json(results);
-    });
-  });
-
-  request.end();
-
-  new Search({
-    term: search,
-    when: Date.now()
-  }).save(function(err) {
-    if (err)
-      console.err('Error saving search: ', err);
-  });
+    dbPromise.then((db) => db.run('INSERT INTO image_search(search) VALUES (?)', search))
+      .catch((e) => console.log('Error saving image search:', e));
+  } catch (e) {
+    console.log('Error searching image:', e);
+    next(new Error('Server error'));
+  }
 });
 
-router.get('/latest', function(req, res) {
-  Search.find({}, '-_id term when', { sort: { when: -1 }, limit: 10 }, function(err, results) {
-    res.json(results);
-  });
+router.get('/latest', async (req, res) => {
+  try {
+    const db = await dbPromise;
+    const rows = await db.all(`
+      SELECT search, date FROM image_search
+      ORDER BY date DESC LIMIT 10
+    `);
+
+    res.json(rows.map((row) => ({
+      term: row.search,
+      when: new Date(row.date).getTime(),
+    })));
+  } catch (e) {
+    console.log('Error getting latest image searches:', e);
+    next(new Error('Server error'));
+  }
 });
 
 module.exports = router;

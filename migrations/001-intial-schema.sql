@@ -18,6 +18,12 @@ CREATE TABLE exercise (
   FOREIGN KEY (user) REFERENCES user(id)
 );
 
+CREATE TABLE image_search (
+  id INTEGER PRIMARY KEY,
+  search VARCHAR NOT NULL,
+  date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 INSERT INTO url VALUES ('2zEjBV', 'https://www.google.com');
 
 INSERT INTO user(username) VALUES ('admin');
@@ -28,3 +34,4 @@ INSERT INTO exercise(user, description, duration)
 DROP TABLE url;
 DROP TABLE user;
 DROP TABLE exercise;
+DROP TABLE image_search;

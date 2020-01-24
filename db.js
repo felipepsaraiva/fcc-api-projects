@@ -1,11 +1,11 @@
 const sqlite = require('sqlite');
 
-let config = {};
-if (process.env.NODE_ENV == 'development')
-  config.force = 'last';
+const migrationConfig = {};
+if (process.env.DB_FORCE_MIGRATION == 'true')
+  migrationConfig.force = 'last';
 
-module.exports = sqlite.open('./apis.sqlite')
-  .then((db) => db.migrate(config))
+module.exports = sqlite.open(process.env.DB_URL)
+  .then((db) => db.migrate(migrationConfig))
   .then(async (db) => {
     await db.run('PRAGMA foreign_keys = ON')
     return db;
